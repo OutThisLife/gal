@@ -24,10 +24,8 @@ const main = async () => {
     }).outputHandler((bin, stdout, stderr, [cmd]) => {
       assert.equal(bin, 'git')
 
-      if (!['branch', 'remote'].includes(cmd)) {
-        stdout.pipe(process.stdout)
-        stderr.pipe(process.stderr)
-      }
+      stdout.pipe(process.stdout)
+      stderr.pipe(process.stderr)
     })
 
     const [{ name = 'origin' }] = await git.getRemotes()
