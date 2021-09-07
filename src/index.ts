@@ -3,16 +3,19 @@
 import assert from 'assert'
 import simpleGit from 'simple-git'
 
+console.log('wat')
+console.log('wat')
+console.log('wat')
+console.log('wat')
+
 const main = async () => {
   try {
-    const [a, b, k, v] = process.argv as [
+    const [, , k, v] = process.argv as [
       never,
       never,
       'push' | 'pull' | '-m' | string | undefined,
       string | undefined
     ]
-
-    console.log({ a, b })
 
     const git = simpleGit({
       baseDir: process.cwd(),
@@ -29,6 +32,7 @@ const main = async () => {
 
     const [{ name = 'origin' }] = await git.getRemotes()
     const { current } = await git.branch()
+    console.log({ current, name })
 
     if (k && ['push', 'pull'].includes(k)) {
       await git[k](name, current)
