@@ -12,8 +12,6 @@ const main = async () => {
     process.exit(1)
   }
 
-  const msg = a === '-m' ? b : a
-
   try {
     const git = simpleGit({
       baseDir: process.cwd(),
@@ -28,20 +26,27 @@ const main = async () => {
       }
     })
 
-    const { current } = await git.branch()
     const [{ name = 'origin' }] = await git.getRemotes()
+    const { current } = await git.branch()
 
-    if (!current) {
-      console.log('Not on any branch, apparently?')
+    switch (a) {
+      case 'pull':
+        await git.pull(name, current)
 
-      process.exit(1)
+        break
+
+      case 'push':
+        await git.push(name, current)
+
+        break
+
+      default:
+        await Promise.all([
+          git.add(['.', '-A']),
+          git.commit(`${a === '-m' ? b : a}`),
+          git.push(`${name}`, `${current}`)
+        ])
     }
-
-    await Promise.all([
-      git.add(['.', '-A']),
-      git.commit(`${msg}`),
-      git.push(`${name}`, `${current}`)
-    ])
 
     process.exit(0)
   } catch (err) {
