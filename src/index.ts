@@ -12,6 +12,8 @@ const main = async () => {
       string | undefined
     ]
 
+    console.log({ k, v })
+
     const git = simpleGit({
       baseDir: process.cwd(),
       binary: 'git',
