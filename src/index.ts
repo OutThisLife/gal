@@ -8,7 +8,7 @@ const main = async () => {
     const [, , k, v] = process.argv as [
       never,
       never,
-      'push' | 'pull' | '-m' | string | undefined,
+      '-m' | 'push' | 'pull' | 'clean' | string | undefined,
       string | undefined
     ]
 
@@ -31,6 +31,8 @@ const main = async () => {
 
     if (k && ['push', 'pull'].includes(k)) {
       await git[k](name, current)
+    } else if (k === 'clean') {
+      console.log(await git.branchLocal())
     } else {
       await Promise.all([
         git.add(['.', '-A']),
