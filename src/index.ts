@@ -5,25 +5,19 @@ import simpleGit from 'simple-git'
 
 const main = async () => {
   try {
-    const [, , k, v] = process.argv as [
-      never,
-      never,
-      '-m' | 'push' | 'pull' | 'clean' | string | undefined,
-      string | undefined
-    ]
+    const [, , k, v] = process.argv
 
     const git = simpleGit({
       baseDir: process.cwd(),
       binary: 'git',
       maxConcurrentProcesses: 3
-    }).outputHandler((bin, stdout, stderr, [cmd]) => {
+    }).outputHandler((bin, stdout, stderr, args) => {
       assert.equal(bin, 'git')
 
-      if (!['branch', 'remote'].includes(cmd)) {
+      if (args.length > 1 && !args.includes('status')) {
         stdout.pipe(process.stdout)
+        stderr.pipe(process.stderr)
       }
-
-      stderr.pipe(process.stderr)
     })
 
     const [{ name = 'origin' }] = await git.getRemotes()
@@ -31,12 +25,12 @@ const main = async () => {
 
     if (k && ['push', 'pull'].includes(k)) {
       await git[k](name, current)
-    } else if (k === 'clean') {
-      console.log(await git.branchLocal())
+    } else if (k === 'prune') {
+      await git.remote(['prune', name])
     } else {
       await Promise.all([
         git.add(['.', '-A']),
-        git.commit(`${(k === '-m' ? v : k) ?? ''}`, {
+        git.commit((k === '-m' ? v : k) ?? '', {
           '--allow-empty-message': null
         }),
         git.push(`${name}`, `${current}`)
