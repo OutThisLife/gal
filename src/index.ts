@@ -19,8 +19,7 @@ const main = async () => {
 
     const git = simpleGit({
       baseDir: process.cwd(),
-      binary: 'git',
-      maxConcurrentProcesses: 3
+      binary: 'git'
     }).outputHandler((bin, stdout, stderr, [cmd]) => {
       assert.equal(bin, 'git')
 
