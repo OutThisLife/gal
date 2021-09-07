@@ -24,13 +24,15 @@ const main = async () => {
     }).outputHandler((bin, stdout, stderr, [cmd]) => {
       assert.equal(bin, 'git')
 
-      stdout.pipe(process.stdout)
-      stderr.pipe(process.stderr)
+      if (!['branch', 'remote'].includes(cmd)) {
+        stdout.pipe(process.stdout)
+        stderr.pipe(process.stderr)
+      }
     })
 
     const [{ name = 'origin' }] = await git.getRemotes()
     const { current } = await git.branch()
-    console.log({ current, name }, await git.branch())
+    console.log({ current, name }, await git.branch({ '--show-current': null }))
 
     if (k && ['push', 'pull'].includes(k)) {
       await git[k](name, current)
