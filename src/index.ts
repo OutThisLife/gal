@@ -3,13 +3,15 @@
 import simpleGit from 'simple-git'
 
 const main = async () => {
-  const [, , msg] = process.argv
+  const [, , a, b] = process.argv
 
-  if (!`${msg}`.length) {
+  if (!a?.length || (a === 'm' && !b?.length)) {
     console.log('No commit message found')
 
     process.exit(1)
   }
+
+  const msg = a === '-m' ? b : a
 
   const git = simpleGit({
     baseDir: process.cwd(),
@@ -26,13 +28,13 @@ const main = async () => {
     process.exit(1)
   }
 
-  const res = await Promise.all([
+  const [, , res] = await Promise.all([
     git.add(['.', '-A']),
     git.commit(`${msg}`),
     git.push(`${name}`, `${current}`)
   ])
 
-  console.log(res)
+  console.log(res.remoteMessages)
 
   process.exit(0)
 }
