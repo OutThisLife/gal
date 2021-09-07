@@ -34,7 +34,7 @@ const main = async () => {
     git.push(`${name}`, `${current}`)
   ])
 
-  console.log(res.remoteMessages)
+  console.log(res)
 
   process.exit(0)
 }
