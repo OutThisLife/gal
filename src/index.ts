@@ -31,7 +31,7 @@ const main = async () => {
       stderr.pipe(process.stderr)
     })
 
-    console.log(await git.branch({ '--show-current': null }))
+    console.log(await git.branch())
     const [{ name = 'origin' }] = await git.getRemotes()
     const { current } = await git.branch()
 
