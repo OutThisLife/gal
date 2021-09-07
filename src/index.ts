@@ -20,7 +20,7 @@ const main = async () => {
       binary: 'git',
       maxConcurrentProcesses: 3
     }).outputHandler((bin, stdout, stderr) => {
-      console.log(bin)
+      console.log({ bin })
 
       stdout.pipe(process.stdout)
 
