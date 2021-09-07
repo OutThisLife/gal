@@ -3,28 +3,25 @@
 import assert from 'assert'
 import simpleGit from 'simple-git'
 
-type Args = [
-  never,
-  never,
-  'push' | 'pull' | '-m' | string | undefined,
-  string | undefined
-]
-
 const main = async () => {
-  const [, , k, v] = process.argv as Args
+  const [, , k, v] = process.argv as [
+    never,
+    never,
+    'push' | 'pull' | '-m' | string | undefined,
+    string | undefined
+  ]
 
   try {
     const git = simpleGit({
       baseDir: process.cwd(),
       binary: 'git',
       maxConcurrentProcesses: 3
-    }).outputHandler((bin, stdout, stderr, args) => {
+    }).outputHandler((bin, stdout, stderr, [cmd]) => {
       assert.equal(bin, 'git')
 
-      if (!['branch', 'remote'].includes(args[0])) {
+      if (!['branch', 'remote'].includes(cmd)) {
         stdout.pipe(process.stdout)
         stderr.pipe(process.stderr)
-        console.log([bin, args].join(' '))
       }
     })
 
