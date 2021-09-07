@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
+import debug from 'debug'
 import simpleGit from 'simple-git'
 
-const main = async () => {
-  process.env.DEBUG = 'simple-git:output:*'
+debug.enable('simple-git')
 
+const main = async () => {
   const [, , a, b] = process.argv
 
   if (!a?.length || (a === 'm' && !b?.length)) {
@@ -33,7 +34,7 @@ const main = async () => {
   const [, , res] = await Promise.all([
     git.add(['.', '-A']),
     git.commit(`${msg}`),
-    git.push(`${name}`, `${current}`)
+    git.push(`${name}`, `${current}`, ['-n'])
   ])
 
   console.log(res)
