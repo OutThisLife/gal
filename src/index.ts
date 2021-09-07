@@ -3,11 +3,6 @@
 import assert from 'assert'
 import simpleGit from 'simple-git'
 
-console.log('wat')
-console.log('wat')
-console.log('wat')
-console.log('wat')
-
 const main = async () => {
   try {
     const [, , k, v] = process.argv as [
