@@ -4,17 +4,10 @@ Inspired by [git-push-all](https://github.com/ssmolkin1/git-push-all), I made th
 ## Usage
 Install via `npm i -g gal` or `yarn global add gal` and then use it like so:
 
-### git push
-```
-> gal
-```
-
-### git pull
-```
-> gal pull
-```
-
-### git add, commit, push
-```
-> gal "my commit message"
-```
+|gal \<option>|git equiv|
+|-|-|
+|\<empty>|`git add . -A`<br />`git commit --allow-empty-message`<br />`git push <origin> <branch>`|
+|"my message"|`git add . -A`<br />`git commit -m "my message"`<br />`git push <origin> <branch>`|
+|pull|`git pull <origin> <branch>`|
+|push|`git push <origin> <branch>`|
+|prune|`git remote prune origin`|
