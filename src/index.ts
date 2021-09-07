@@ -5,14 +5,14 @@ import simpleGit from 'simple-git'
 
 const main = async () => {
   try {
-    const [, , k, v] = process.argv as [
+    const [a, b, k, v] = process.argv as [
       never,
       never,
       'push' | 'pull' | '-m' | string | undefined,
       string | undefined
     ]
 
-    console.log({ k, v })
+    console.log({ a, b })
 
     const git = simpleGit({
       baseDir: process.cwd(),
