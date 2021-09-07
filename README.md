@@ -4,8 +4,7 @@ Inspired by [git-push-all](https://github.com/ssmolkin1/git-push-all), I made th
 
 ## Usage
 
-`npm`: `npm i -g gal`
-`yarn`: `yarn global add gal`
+Install via `npm i -g gal` or `yarn global add gal` and then use it like so:
 
 ```
 gal "my commit message"
