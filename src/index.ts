@@ -24,7 +24,7 @@ const main = async () => {
     }).outputHandler((bin, stdout, stderr, [cmd]) => {
       assert.equal(bin, 'git')
 
-      if (!['remote'].includes(cmd)) {
+      if (!['branch', 'remote'].includes(cmd)) {
         stdout.pipe(process.stdout)
       }
 
