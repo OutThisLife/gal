@@ -20,6 +20,8 @@ const main = async () => {
       binary: 'git',
       maxConcurrentProcesses: 3
     }).outputHandler((bin, stdout, stderr) => {
+      console.log(bin)
+
       stdout.pipe(process.stdout)
 
       stderr.pipe(process.stderr)
@@ -39,7 +41,7 @@ const main = async () => {
     await Promise.all([
       git.add(['.', '-A']),
       git.commit(`${msg}`),
-      git.push(`${name}`, `${current}`, ['-n'])
+      git.push(`${name}`, `${current}`)
     ])
 
     process.exit(0)
