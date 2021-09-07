@@ -20,13 +20,13 @@ const main = async () => {
       binary: 'git',
       maxConcurrentProcesses: 3
     }).outputHandler((bin, stdout, stderr, args) => {
-      console.log({ args })
-
       stdout.pipe(process.stdout)
 
       stderr.pipe(process.stderr)
 
       assert.equal(bin, 'git')
+
+      assert.notDeepEqual(args, ['push'])
     })
 
     const { current } = await git.branch()
