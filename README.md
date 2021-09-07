@@ -6,16 +6,17 @@ Inspired by [git-push-all](https://github.com/ssmolkin1/git-push-all), I made th
 
 Install via `npm i -g gal` or `yarn global add gal` and then use it like so:
 
+### git push
 ```
-gal "my commit message"
-```
-
-Will run:
-
-```
-> git add . -A
-> git commit -m "my commit message"
-> git push <origin> <branch>
+> gal
 ```
 
-All in one!
+### git pull
+```
+> gal pull
+```
+
+### git add, commit, push
+```
+> gal "my commit message"
+```
