@@ -3,7 +3,7 @@
 import debug from 'debug'
 import simpleGit from 'simple-git'
 
-debug.enable('simple-git')
+debug.enable('simple-git:output:*')
 
 const main = async () => {
   const [, , a, b] = process.argv
@@ -16,28 +16,34 @@ const main = async () => {
 
   const msg = a === '-m' ? b : a
 
-  const git = simpleGit({
-    baseDir: process.cwd(),
-    binary: 'git',
-    maxConcurrentProcesses: 3
-  })
+  try {
+    const git = simpleGit({
+      baseDir: process.cwd(),
+      binary: 'git',
+      maxConcurrentProcesses: 3
+    })
 
-  const { current } = await git.branch()
-  const [{ name = 'origin' }] = await git.getRemotes()
+    const { current } = await git.branch()
+    const [{ name = 'origin' }] = await git.getRemotes()
 
-  if (!current) {
-    console.log('Not on any branch, apparently?')
+    if (!current) {
+      console.log('Not on any branch, apparently?')
+
+      process.exit(1)
+    }
+
+    await Promise.all([
+      git.add(['.', '-A']),
+      git.commit(`${msg}`),
+      git.push(`${name}`, `${current}`, ['-n'])
+    ])
+
+    process.exit(0)
+  } catch (err) {
+    console.error(err)
 
     process.exit(1)
   }
-
-  await Promise.all([
-    git.add(['.', '-A']),
-    git.commit(`${msg}`),
-    git.push(`${name}`, `${current}`, ['-n'])
-  ])
-
-  process.exit(0)
 }
 
 main()

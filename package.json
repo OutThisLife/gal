@@ -38,5 +38,8 @@
   "dependencies": {
     "debug": "^4.3.2",
     "simple-git": "^2.45.1"
-  }
+  },
+   "resolutions": {
+    "debug": "^4.3.2"
+   }
 }
