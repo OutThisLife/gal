@@ -1,26 +1,12 @@
 {
   "name": "gal",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Git add, commit, and push in one line.",
   "main": "./dist/index.js",
   "bin": {
     "gal": "./dist/index.js"
   },
-  "scripts": {
-    "lint": "eslint --fix src",
-    "format": "prettier -w src",
-    "build": "tsc",
-    "dev": "tsc -w",
-    "prepare": "yarn build"
-  },
-  "repository": {
-    "type":"git",
-    "url":"https://github.com/OutThisLife/gal"
-  },
-  "homepage": "https://github.com/OutThisLife/gal",
-  "bugs": {
-    "url":"https://github.com/OutThisLife/gal/issues"
-  },
+  "files": ["dist"],
   "keywords": [
     "git",
     "quick",
@@ -30,7 +16,16 @@
     "GitHub"
   ],
   "author": "Talasan Nicholson <talasan.nicholson@gmail.com>",
-  "license": "GPL-3.0",
+  "license": "MIT",
+  "homepage": "https://github.com/OutThisLife/gal",
+  "bugs": "https://github.com/OutThisLife/gal/issues",
+  "scripts": {
+    "lint": "eslint --fix src",
+    "format": "prettier -w src",
+    "build": "tsc",
+    "dev": "tsc -w",
+    "prepare": "yarn build"
+  },
   "devDependencies": {
     "@types/node": "^16.7.6",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
