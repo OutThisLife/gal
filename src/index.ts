@@ -20,7 +20,7 @@ const main = async () => {
       maxConcurrentProcesses: 3
     }).outputHandler((bin, stdout, stderr, args) => {
       assert.equal(bin, 'git')
-      console.log(args)
+      console.log(args.join(' '))
 
       if (!['branch', 'remote'].includes(args[0])) {
         stdout.pipe(process.stdout)
