@@ -33,7 +33,7 @@ const main = async () => {
     } else {
       await Promise.all([
         git.add(['.', '-A']),
-        git.commit(`${k === '-m' ? v ?? '' : k ?? ''}`, {
+        git.commit(`${(k === '-m' ? v : k) ?? ''}`, {
           '--allow-empty-message': null
         }),
         git.push(`${name}`, `${current}`)
