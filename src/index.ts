@@ -3,16 +3,15 @@
 import assert from 'assert'
 import simpleGit from 'simple-git'
 
-type Args = [never, never, 'pull' | 'push' | '-m' | string, string | undefined]
+type Args = [
+  never,
+  never,
+  'push' | 'pull' | '-m' | string | undefined,
+  string | undefined
+]
 
 const main = async () => {
   const [, , k, v] = process.argv as Args
-
-  if (!k?.length) {
-    console.log('No commit message found')
-
-    process.exit(1)
-  }
 
   try {
     const git = simpleGit({
@@ -31,23 +30,16 @@ const main = async () => {
     const [{ name = 'origin' }] = await git.getRemotes()
     const { current } = await git.branch()
 
-    switch (k) {
-      case 'pull':
-        await git.pull(name, current)
-
-        break
-
-      case 'push':
-        await git.push(name, current)
-
-        break
-
-      default:
-        await Promise.all([
-          git.add(['.', '-A']),
-          git.commit(`${k === '-m' ? v : k}`),
-          git.push(`${name}`, `${current}`)
-        ])
+    if (k && ['push', 'pull'].includes(k)) {
+      await git[k](name, current)
+    } else {
+      await Promise.all([
+        git.add(['.', '-A']),
+        git.commit(`${k === '-m' ? v : k}`, undefined, {
+          '--allow-empty': null
+        }),
+        git.push(`${name}`, `${current}`)
+      ])
     }
 
     process.exit(0)

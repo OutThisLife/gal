@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "importHelpers": false
+    "importHelpers": false,
+    "suppressImplicitAnyIndexErrors": true,
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
