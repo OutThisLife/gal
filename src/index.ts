@@ -32,7 +32,7 @@ const main = async () => {
 
     const [{ name = 'origin' }] = await git.getRemotes()
     const { current } = await git.branch()
-    console.log({ current, name }, await git.getRemotes())
+    console.log({ current, name }, await git.branch())
 
     if (k && ['push', 'pull'].includes(k)) {
       await git[k](name, current)
