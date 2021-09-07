@@ -23,7 +23,6 @@
   "author": "Talasan Nicholson <talasan.nicholson@gmail.com>",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@types/debug": "^4.1.7",
     "@types/node": "^16.7.6",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
@@ -36,10 +35,6 @@
     "typescript": "^4.4.2"
   },
   "dependencies": {
-    "debug": "^4.3.2",
     "simple-git": "^2.45.1"
-  },
-   "resolutions": {
-    "debug": "^4.3.2"
-   }
+  }
 }

@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
-import debug from 'debug'
+import assert from 'assert'
 import simpleGit from 'simple-git'
-
-debug.enable('simple-git:output:*')
 
 const main = async () => {
   const [, , a, b] = process.argv
@@ -21,6 +19,12 @@ const main = async () => {
       baseDir: process.cwd(),
       binary: 'git',
       maxConcurrentProcesses: 3
+    }).outputHandler((bin, stdout, stderr) => {
+      stdout.pipe(process.stdout)
+
+      stderr.pipe(process.stderr)
+
+      assert.equal(bin, 'git')
     })
 
     const { current } = await git.branch()
