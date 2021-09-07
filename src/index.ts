@@ -4,14 +4,14 @@ import assert from 'assert'
 import simpleGit from 'simple-git'
 
 const main = async () => {
-  const [, , k, v] = process.argv as [
-    never,
-    never,
-    'push' | 'pull' | '-m' | string | undefined,
-    string | undefined
-  ]
-
   try {
+    const [, , k, v] = process.argv as [
+      never,
+      never,
+      'push' | 'pull' | '-m' | string | undefined,
+      string | undefined
+    ]
+
     const git = simpleGit({
       baseDir: process.cwd(),
       binary: 'git',
