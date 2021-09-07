@@ -1,6 +1,6 @@
 {
   "name": "gal",
-  "version": "0.0.4",
+  "version": "0.0.31",
   "description": "Git add, commit, and push in one line.",
   "main": "./dist/index.js",
   "bin": {
