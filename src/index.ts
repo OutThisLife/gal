@@ -19,11 +19,12 @@ const main = async () => {
       baseDir: process.cwd(),
       binary: 'git',
       maxConcurrentProcesses: 3
-    }).outputHandler((bin, stdout, stderr, args) => {
-      if (args?.[0] === 'push') {
-        assert.equal(bin, 'git')
+    }).outputHandler((bin, stdout, stderr, [cmd]) => {
+      assert.equal(bin, 'git')
 
+      if (!['branch', 'remote'].includes(cmd)) {
         stdout.pipe(process.stdout)
+        stderr.pipe(process.stderr)
       }
     })
 
