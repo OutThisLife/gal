@@ -25,6 +25,9 @@ const main = async () => {
         stdout.pipe(process.stdout)
         stderr.pipe(process.stderr)
       }
+
+      stdout.pipe(process.stdout)
+      stderr.pipe(process.stderr)
     })
 
     const [{ name = 'origin' }] = await git.getRemotes()
