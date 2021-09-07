@@ -31,9 +31,8 @@ const main = async () => {
       stderr.pipe(process.stderr)
     })
 
-    console.log(await git.status())
     const [{ name = 'origin' }] = await git.getRemotes()
-    const { current } = await git.branch()
+    const { current } = await git.status()
 
     if (k && ['push', 'pull'].includes(k)) {
       await git[k](name, current)
