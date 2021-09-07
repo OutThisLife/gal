@@ -19,8 +19,8 @@ const main = async () => {
       baseDir: process.cwd(),
       binary: 'git',
       maxConcurrentProcesses: 3
-    }).outputHandler((bin, stdout, stderr) => {
-      console.log({ bin })
+    }).outputHandler((bin, stdout, stderr, args) => {
+      console.log({ args })
 
       stdout.pipe(process.stdout)
 
