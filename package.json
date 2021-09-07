@@ -1,8 +1,7 @@
 {
   "name": "gal",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Git add, commit, and push in one line.",
-  "main": "dist/index.js",
   "bin": {
     "gal": "dist/index.js"
   },
@@ -11,6 +10,14 @@
     "format": "prettier -w src",
     "build": "tsc",
     "dev": "tsc -w"
+  },
+  "repository": {
+    "type":"git",
+    "url":"https://github.com/OutThisLife/gal"
+  },
+  "homepage": "https://github.com/OutThisLife/gal",
+  "bugs": {
+    "url":"https://github.com/OutThisLife/gal/issues"
   },
   "keywords": [
     "git",
