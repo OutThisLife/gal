@@ -31,13 +31,11 @@ const main = async () => {
     process.exit(1)
   }
 
-  const [, , res] = await Promise.all([
+  await Promise.all([
     git.add(['.', '-A']),
     git.commit(`${msg}`),
     git.push(`${name}`, `${current}`, ['-n'])
   ])
-
-  console.log(res)
 
   process.exit(0)
 }
