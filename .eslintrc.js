@@ -10,7 +10,7 @@ const init = (
     {}
 ) => ({
   extends: ['airbnb-typescript-prettier'],
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js', 'dist'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2021,
