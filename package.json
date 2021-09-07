@@ -1,9 +1,10 @@
 {
   "name": "gal",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Git add, commit, and push in one line.",
+  "main": "./dist/index.js",
   "bin": {
-    "gal": "dist/index.js"
+    "gal": "./dist/index.js"
   },
   "scripts": {
     "lint": "eslint --fix src",
