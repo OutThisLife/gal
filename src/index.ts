@@ -60,10 +60,8 @@
           GIT_SEQUENCE_EDITOR: `sed -i -re 's/^pick /e /'`
         })
 
-        const res = await git.rebase(['-i', '--autosquash', 'master'])
-
-        console.log(res)
-
+        await git.rebase(['-i', '--autosquash', 'master'])
+        await git.add(['-A'])
         await git.commit('')
 
         if (!dry) {
