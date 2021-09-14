@@ -57,16 +57,15 @@
       .action(async (_, { dry }) => {
         await git.env({
           ...process.env,
-          GIT_SEQUENCE_EDITOR: ':'
+          GIT_SEQUENCE_EDITOR: `sed -i -re 's/^pick /e /'`
         })
 
         await git.rebase(['-i', '--autosquash', 'master'])
-        // await git.add(['-A'])
-        // await git.commit('')
+        await git.commit('')
 
-        // if (!dry) {
-        //   await git.push(remote, branch)
-        // }
+        if (!dry) {
+          await git.push(remote, branch)
+        }
       })
 
     prog
@@ -74,19 +73,18 @@
       .argument('[msg...]')
       .description('git commit -m [msg]')
       .action(async (k, { dry, m }) => {
-        const msg = m ?? k
+        const msg = m ?? k ?? []
+
+        if (!msg.length) {
+          msg.push('uptick')
+        }
+
+        if (!/^(feat|fix|style|docs|chore|test|refactor):$/.test(msg[0])) {
+          msg.unshift('chore:')
+        }
 
         await git.add(['.', '-A'])
-
-        if (!msg?.length) {
-          await git.commit('', { '--allow-empty-message': null })
-        } else {
-          if (!/^(feat|fix|style|docs|chore|test|refactor):$/.test(msg[0])) {
-            msg.unshift('chore:')
-          }
-
-          await git.commit(msg.join(' '))
-        }
+        await git.commit(msg.join(' '))
 
         if (!dry) {
           await git.push(remote, branch)
