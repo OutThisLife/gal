@@ -2,8 +2,4 @@ node_modules/
 dist/
 .env
 tsconfig.tsbuildinfo
-<<<<<<< HEAD
 *.log
-=======
-*.log
->>>>>>> 38a99bc... fixes
