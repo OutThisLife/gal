@@ -55,7 +55,12 @@
       .command('squash')
       .description('automatically squash commits on a branch into 1')
       .action(async (_, { dry }) => {
-        await git.rebase(['--autosquash', 'master'])
+        await git.env({
+          ...process.env,
+          GIT_SEQUENCE_EDITOR: ':'
+        })
+
+        await git.rebase(['-i', '--autosquash', 'master'])
         await git.add(['-A'])
         await git.commit('')
 
