@@ -54,23 +54,16 @@
     prog
       .command('squash')
       .description('automatically squash commits on a branch into 1')
-      .action(async (_, { dry }) => {
+      .action(async () => {
         await git.env({
           ...process.env,
           GIT_SEQUENCE_EDITOR: `sed -i -se '2,$s/^pick/s/'`
         })
 
-        try {
-          await git.rebase(['-i', '--autosquash', 'master'])
-          await git.add(['-A'])
-          await git.commit('')
-
-          if (!dry) {
-            await git.push(remote, branch)
-          }
-        } catch (__) {
-          await git.rebase(['--abort'])
-        }
+        await git.rebase(['-i', '--autosquash', 'master'])
+        await git.add(['-A'])
+        await git.commit('')
+        await git.push(remote, branch)
       })
 
     prog
