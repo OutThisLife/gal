@@ -61,12 +61,12 @@
         })
 
         await git.rebase(['-i', '--autosquash', 'master'])
-        await git.add(['-A'])
-        await git.commit('')
+        // await git.add(['-A'])
+        // await git.commit('')
 
-        if (!dry) {
-          await git.push(remote, branch)
-        }
+        // if (!dry) {
+        //   await git.push(remote, branch)
+        // }
       })
 
     prog
