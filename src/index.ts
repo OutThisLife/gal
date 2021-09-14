@@ -57,6 +57,7 @@
       .action(async () => {
         await git.env('GIT_SEQUENCE_EDITOR', `sed -i -re 's/^pick /e /'`)
         await git.rebase(['-i', '--autosquash', 'master'])
+        await git.commit('')
         await git.push(remote, branch)
       })
 
