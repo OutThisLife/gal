@@ -66,14 +66,18 @@
       .argument('[msg...]')
       .description('git commit -m [msg]')
       .action(async (k, { dry, m }) => {
-        const msg = (m ?? k).join(' ')
+        const msg = m ?? k
 
         await git.add(['.', '-A'])
 
-        if (!msg.length) {
+        if (!msg?.length) {
           await git.commit('', { '--allow-empty-message': null })
         } else {
-          await git.commit(msg)
+          if (!/^(feat|fix|style|docs|chore|test|refactor):$/.test(msg[0])) {
+            msg.unshift('chore:')
+          }
+
+          await git.commit(msg.join(' '))
         }
 
         if (!dry) {
