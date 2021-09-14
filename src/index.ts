@@ -57,7 +57,7 @@
       .action(async (_, { dry }) => {
         await git.env({
           ...process.env,
-          GIT_SEQUENCE_EDITOR: `sed -i -se '2,$s/^pick/f/'`
+          GIT_SEQUENCE_EDITOR: `sed -i -se '2,$s/^pick/s/'`
         })
 
         try {
