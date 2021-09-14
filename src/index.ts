@@ -94,7 +94,9 @@
           msg.push('uptick')
         }
 
-        if (!/^(feat|fix|style|docs|chore|test|refactor):$/.test(msg[0])) {
+        if (
+          !/^(feat|release|fix|style|docs|chore|test|refactor):$/.test(msg[0])
+        ) {
           msg.unshift('chore:')
         }
 
