@@ -54,11 +54,7 @@
     prog
       .command('squash')
       .description('automatically squash commits on a branch into 1')
-      .action(async () => {
-        await git.reset(['--soft', 'master'])
-        await git.add(['-A'])
-        await git.commit('fix: squashing')
-      })
+      .action(async () => void git.rebase(['-i', 'master']))
 
     prog
       .option('-m <msg>')
