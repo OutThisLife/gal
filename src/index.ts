@@ -57,11 +57,11 @@
       .action(async () => void git.rebase(['-i', 'master']))
 
     prog
-      .option('-m <msg>')
-      .argument('[msg]')
+      .option('-m [msg...]')
+      .argument('[msg...]')
       .description('git commit -m [msg]')
       .action(async (k, { dry, m }) => {
-        const msg = k ?? m
+        const msg = (m ?? k).join(' ')
 
         await git.add(['.', '-A'])
 
