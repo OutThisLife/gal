@@ -57,7 +57,7 @@
       .action(async (_, { dry }) => {
         await git.env({
           ...process.env,
-          GIT_SEQUENCE_EDITOR: `sed -i -re 's/^pick /e /'`
+          GIT_SEQUENCE_EDITOR: true
         })
 
         await git.rebase(['-i', '--autosquash', 'master'])
