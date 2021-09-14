@@ -44,7 +44,7 @@
     prog
       .command('push')
       .description('git pull <remote> <branch>')
-      .action(async () => void git.pull(remote, branch))
+      .action(async () => void git.push(remote, branch))
 
     prog
       .command('prune')
