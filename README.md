@@ -6,8 +6,10 @@ Install via `npm i -g gal` or `yarn global add gal` and then use it like so:
 
 |gal \<option>|git equiv|
 |-|-|
-|\<empty>|`git add . -A`<br />`git commit --allow-empty-message`<br />`git push <origin> <branch>`|
-|"my message"|`git add . -A`<br />`git commit -m "my message"`<br />`git push <origin> <branch>`|
-|pull|`git pull <origin> <branch>`|
-|push|`git push <origin> <branch>`|
-|prune|`git remote prune origin`|
+|-d, --dry|run in dry mode|
+|[msg...], -m [msg...]|`git add . -A`<br />`git commit -m "my message"`<br />`git push <origin> <branch>`|
+|pull|`git pull <remote> <branch>`|
+|push|`git push <remote> <branch>`|
+|prune|`git remote prune <remote>, cleaning up local branches`|
+|fetch|`git fetch <remote> <branch>`|
+|rm \<branch>|delete branches, pass `-r` to delete remote|
