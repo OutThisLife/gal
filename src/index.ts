@@ -54,12 +54,10 @@
     prog
       .command('squash')
       .description('automatically squash commits on a branch into 1')
-      .action(
-        async () =>
-          void git
-            .env('GIT_SEQUENCE_EDITOR', 'true')
-            .rebase(['-i', '--autosquash', 'master'])
-      )
+      .action(async () => {
+        await git.env('GIT_SEQUENCE_EDITOR', 'true')
+        await git.rebase(['-i', '--autosquash', 'master'])
+      })
 
     prog
       .option('-m [msg...]')
