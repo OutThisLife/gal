@@ -1,16 +1,20 @@
 #!/usr/bin/env node
 
-import assert from 'assert'
-import simpleGit from 'simple-git'
-
-const main = async () => {
+;(async ({ version }) => {
   try {
-    const [, , k, v] = process.argv
+    const { default: assert } = await import('assert')
+    const { Command } = await import('commander')
+    const { default: simpleGit } = await import('simple-git')
+
+    const prog = new Command('gal')
+
+    prog
+      .version(`${version}`, '-v, --version')
+      .option('-d, --dry', 'run in dry mode')
 
     const git = simpleGit({
       baseDir: process.cwd(),
-      binary: 'git',
-      maxConcurrentProcesses: 3
+      binary: 'git'
     }).outputHandler((bin, stdout, stderr, args) => {
       assert.equal(bin, 'git')
 
@@ -20,29 +24,94 @@ const main = async () => {
       }
     })
 
-    const [{ name = 'origin' }] = await git.getRemotes()
+    const [{ name: remote = 'origin' }] = await git.getRemotes()
     const { current } = await git.status()
 
-    if (k && ['push', 'pull'].includes(k)) {
-      await git[k](name, current)
-    } else if (k === 'prune') {
-      await git.remote(['prune', name])
-    } else {
-      await Promise.all([
-        git.add(['.', '-A']),
-        git.commit((k === '-m' ? v : k) ?? '', {
-          '--allow-empty-message': null
-        }),
-        git.push(`${name}`, `${current}`)
-      ])
+    if (!(remote && current)) {
+      throw new Error('Are you in a git repo?')
     }
 
+    prog
+      .command('pull')
+      .description('git pull <origin> <branch>')
+      .action(async () => void git.pull(remote, current))
+
+    prog
+      .command('fetch')
+      .description('git fetch <remote> <branch>')
+      .action(async () => void git.fetch(remote, current))
+
+    prog
+      .command('push')
+      .description('git pull <remote> <branch>')
+      .action(async () => void git.push(remote, current))
+
+    prog
+      .command('prune')
+      .description('git remote prune <remote>, cleaning up local branches')
+      .action(async () => void git.remote(['prune', remote]))
+
+    prog
+      .command('rm ')
+      .arguments('<branch>')
+      .description('delete branch')
+      .option('-r', 'delete remote branch as well')
+      .action(async (branch, { r = false }) => {
+        try {
+          await git.branch(['-D', branch])
+        } catch (_) {}
+
+        try {
+          if (r) {
+            await git.push([remote, `:${branch}`])
+          }
+        } catch (_) {}
+      })
+
+    prog
+      .command('squash')
+      .description('automatically squash commits on a branch into 1')
+      .action(async () => {
+        await git.env({
+          ...process.env,
+          GIT_SEQUENCE_EDITOR: `sed -i -se '2,$s/^pick/s/'`
+        })
+
+        await git.rebase(['-i', '--autosquash', 'master'])
+        await git.add(['-A'])
+        await git.commit('')
+        await git.push(remote, current)
+      })
+
+    prog
+      .option('-m [msg...]')
+      .argument('[msg...]')
+      .description('git commit -m [msg]')
+      .action(async (k, { dry, m }) => {
+        const msg = m ?? k ?? []
+
+        if (!msg.length) {
+          msg.push('uptick')
+        }
+
+        if (!/^(feat|fix|style|docs|chore|test|refactor):$/.test(msg[0])) {
+          msg.unshift('chore:')
+        }
+
+        await git.add(['.', '-A'])
+        await git.commit(msg.join(' '))
+
+        if (!dry) {
+          await git.push(remote, current)
+        }
+      })
+
+    await prog.parseAsync(process.argv)
+
     process.exit(0)
-  } catch (err) {
+  } catch (err: any) {
     console.error(err)
 
     process.exit(1)
   }
-}
-
-main()
+})(require('../package.json'))

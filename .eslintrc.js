@@ -25,9 +25,11 @@ const init = (
   ],
   root: true,
   rules: {
+    '@typescript-eslint/no-var-requires': 0,
     'import/prefer-default-export': 0,
     'no-console': 0,
     'no-empty': 0,
+    'no-void': 0,
     'no-param-reassign': 0,
     'no-plusplus': 0,
     'no-return-assign': 0,
