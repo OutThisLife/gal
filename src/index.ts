@@ -10,7 +10,7 @@
 
     prog
       .version(`${version}`, '-v, --version')
-      .option('-d, --dry', 'run in dry mode', true)
+      .option('-d, --dry', 'run in dry mode')
 
     const git = simpleGit({
       baseDir: process.cwd(),
