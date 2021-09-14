@@ -62,7 +62,8 @@
 
         try {
           await git.rebase(['-i', '--autosquash', 'master'])
-          await git.status()
+          await git.add(['-A'])
+          await git.commit('')
 
           if (!dry) {
             await git.push(remote, branch)
