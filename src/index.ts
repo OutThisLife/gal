@@ -70,7 +70,7 @@
 
         await git.add(['.', '-A'])
 
-        if (!msg) {
+        if (!msg.length) {
           await git.commit('', { '--allow-empty-message': null })
         } else {
           await git.commit(msg)
