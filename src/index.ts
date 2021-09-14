@@ -64,8 +64,9 @@
 
         console.log(res)
 
+        await git.commit('')
+
         if (!dry) {
-          await git.commit('')
           await git.push(remote, branch)
         }
       })
