@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-console.log(process.env.NODE_ENV)
 
 //
 ;(async ({ version }) => {
@@ -15,7 +14,7 @@ console.log(process.env.NODE_ENV)
       .option(
         '-d, --dry',
         'run in dry mode',
-        process.env.NODE_ENV === 'development'
+        process.env.NODE_ENV !== 'production'
       )
 
     const git = simpleGit({
