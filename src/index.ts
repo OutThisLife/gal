@@ -1,5 +1,7 @@
 #!/usr/bin/env node
+console.log(process.env.NODE_ENV)
 
+//
 ;(async ({ version }) => {
   try {
     const { default: assert } = await import('assert')
@@ -10,7 +12,11 @@
 
     prog
       .version(`${version}`, '-v, --version')
-      .option('-d, --dry', 'run in dry mode')
+      .option(
+        '-d, --dry',
+        'run in dry mode',
+        process.env.NODE_ENV === 'development'
+      )
 
     const git = simpleGit({
       baseDir: process.cwd(),
@@ -18,7 +24,7 @@
     }).outputHandler((bin, stdout, stderr, args) => {
       assert.equal(bin, 'git')
 
-      if (args.length > 1 && !args.includes('status')) {
+      if (!args.includes('status')) {
         stdout.pipe(process.stdout)
         stderr.pipe(process.stderr)
       }
