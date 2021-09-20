@@ -25,8 +25,8 @@
     "lint": "eslint --fix src",
     "format": "prettier -w src",
     "build": "tsc",
-    "dev": "tsc -w",
-    "prepare": "yarn build",
+    "dev": "NODE_ENV=development tsc -w",
+    "prepare": "NODE_ENV=production yarn build",
     "gal": "node dist/index.js"
   },
   "devDependencies": {
