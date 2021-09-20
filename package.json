@@ -27,7 +27,7 @@
     "build": "tsc",
     "dev": "NODE_ENV=development tsc -w",
     "prepare": "NODE_ENV=production yarn build",
-    "gal": "node dist/index.js"
+    "gal": "NODE_ENV=development node dist/index.js"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
