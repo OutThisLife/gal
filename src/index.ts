@@ -20,10 +20,10 @@
     const git = simpleGit({
       baseDir: process.cwd(),
       binary: 'git'
-    }).outputHandler((bin, stdout, stderr, args) => {
+    }).outputHandler((bin, stdout, stderr, [cmd]) => {
       assert.equal(bin, 'git')
 
-      if (!args.includes('status')) {
+      if (!/^(status|remote)/.test(`${cmd}`)) {
         stdout.pipe(process.stdout)
         stderr.pipe(process.stderr)
       }
@@ -39,22 +39,22 @@
     prog
       .command('pull')
       .description('git pull <origin> <branch>')
-      .action(async () => void git.pull(remote, current))
+      .action(async () => void (await git.pull(remote, current)))
 
     prog
       .command('fetch')
       .description('git fetch <remote> <branch>')
-      .action(async () => void git.fetch(remote, current))
+      .action(async () => void (await git.fetch(remote, current)))
 
     prog
       .command('push')
       .description('git pull <remote> <branch>')
-      .action(async () => void git.push(remote, current))
+      .action(async () => void (await git.push(remote, current)))
 
     prog
       .command('prune')
       .description('git remote prune <remote>, cleaning up local branches')
-      .action(async () => void git.remote(['prune', remote]))
+      .action(async () => void (await git.remote(['prune', remote])))
 
     prog
       .command('rm ')
