@@ -94,7 +94,7 @@
       .argument('[msg...]')
       .description('git commit -m [msg]')
       .action(async (k, { dry, m }) => {
-        const msg = m ?? k ?? []
+        const msg = ['🦄', ...(m ?? k ?? [])]
 
         if (!msg.length) {
           msg.push('uptick')
