@@ -108,11 +108,15 @@
           msg.unshift('chore:')
         }
 
+        msg.unshift('🦄')
+
         await git.add(['.', '-A'])
-        await git.commit(['🦄', msg].join(' '))
+        await git.commit(msg.join(' '))
 
         if (!dry) {
           await git.push(remote, current)
+        } else {
+          console.log(msg)
         }
       })
 
