@@ -100,6 +100,8 @@
           msg.push('uptick')
         }
 
+        msg.push('🦄')
+
         if (
           !/^(feat|release|fix|style|docs|chore|test|refactor):$/.test(
             `${msg.at(0)}`
@@ -107,8 +109,6 @@
         ) {
           msg.unshift('chore:')
         }
-
-        msg.push('🦄')
 
         await git.add(['.', '-A'])
         await git.commit(msg.join(' '))
