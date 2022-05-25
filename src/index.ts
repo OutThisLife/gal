@@ -108,7 +108,7 @@
           msg.unshift('chore:')
         }
 
-        msg.unshift('🦄')
+        msg.push('🦄')
 
         await git.add(['.', '-A'])
         await git.commit(msg.join(' '))
