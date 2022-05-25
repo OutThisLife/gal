@@ -115,8 +115,6 @@
 
         if (!dry) {
           await git.push(remote, current)
-        } else {
-          console.log(msg)
         }
       })
 
