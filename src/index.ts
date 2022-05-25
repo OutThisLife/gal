@@ -100,7 +100,7 @@
           msg.push('uptick')
         }
 
-        msg.push('🦄')
+        msg.unshift('🦄')
 
         if (
           !/^(feat|release|fix|style|docs|chore|test|refactor):$/.test(
