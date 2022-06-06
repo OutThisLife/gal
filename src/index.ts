@@ -96,12 +96,6 @@
       .action(async (k, { dry, m }) => {
         const msg = (m ?? k ?? []) as string[]
 
-        if (!msg.length) {
-          msg.push('uptick')
-        }
-
-        msg.unshift('🦄')
-
         if (
           !/^(feat|release|fix|style|docs|chore|test|refactor):$/.test(
             `${msg.at(0)}`
@@ -109,6 +103,12 @@
         ) {
           msg.unshift('chore:')
         }
+
+        if (msg.length === 1) {
+          msg.push('uptick')
+        }
+
+        msg.push('🦄')
 
         await git.add(['.', '-A'])
         await git.commit(msg.join(' '))
